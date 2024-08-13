@@ -1,0 +1,13 @@
+<p>Total tasks: {{ totalTodos }}</p>
+<p>Completed tasks: {{ completedTodos }}</p>
+<hr>
+My tasks:
+<ul>
+  @for (todo of todos; track todo; let i = $index) {
+    <div class="todo">
+      <li [class.done]="todo.completed">{{ todo.title }}</li>
+    </div>
+  }
+</ul>
+
+

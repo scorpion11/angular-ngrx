@@ -1,0 +1,16 @@
+<form (ngSubmit)="addTodo()">
+  <div class="label">Add new Todo</div>
+  <input name="todoName" [ngModel]="todoName" (ngModelChange)="todoName = $event" type="text"/>
+</form>
+
+<hr>
+
+My tasks:
+<ul>
+  @for (todo of (todos$ | async); track todo; let i = $index) {
+    <div class="todo">
+      <li [class.done]="todo.completed">{{ todo.title }}</li>
+      <input id="todo-{{i}}" type="checkbox" name="todoState" [ngModel]="todo.completed" (ngModelChange)="todo.completed = $event">
+    </div>
+  }
+</ul>
