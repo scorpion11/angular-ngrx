@@ -10,7 +10,7 @@ My tasks:
   @for (todo of (todos$ | async); track todo; let i = $index) {
     <div class="todo">
       <li [class.done]="todo.completed">{{ todo.title }}</li>
-      <input id="todo-{{i}}" type="checkbox" name="todoState" [ngModel]="todo.completed" (ngModelChange)="todo.completed = $event">
+      <input id="todo-{{i}}" type="checkbox" name="todoState" [ngModel]="todo.completed">
     </div>
   }
 </ul>

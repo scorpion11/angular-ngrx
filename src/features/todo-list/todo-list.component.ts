@@ -2,8 +2,11 @@ import {Component, inject} from '@angular/core';
 import {Todo} from "./interfaces/todo.interface";
 import {TodoService} from "./services/todo.service";
 import {FormsModule} from "@angular/forms";
-import {AsyncPipe, NgClass} from "@angular/common";
-import {Observable} from "rxjs";
+import {AsyncPipe} from "@angular/common";
+import {AppState} from "../../app/app.state";
+import {Store} from "@ngrx/store";
+import {TodoActions} from "./store/actions/todos.actions";
+import {selectTodos} from "./store/selectors/todos.selectors";
 
 @Component({
   selector: 'app-todo-list',
@@ -17,17 +20,16 @@ import {Observable} from "rxjs";
   standalone: true
 })
 export class TodoListComponent {
-  todoService = inject(TodoService);
-  todos$ = this.todoService.getTodos();
+  store = inject(Store<AppState>);
+  todos$ = this.store.select(selectTodos);
 
   todoName: string = '';
   todoState: boolean = false;
 
   addTodo() {
-    const newTodo: Todo = { id: Date.now(), title: this.todoName, completed: this.todoState };
-    this.todoService.addTodo(newTodo);
+    const newTodo: Todo = {id: Date.now(), title: this.todoName, completed: this.todoState};
     this.todoName = '';
     this.todoState = false;
-    this.todos$ = this.todoService.getTodos();
+    this.store.dispatch(TodoActions.addTodo({todo: newTodo}));
   }
 }

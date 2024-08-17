@@ -1,0 +1,13 @@
+<p>Total tasks: {{ (todos$ | async)?.length }}</p>
+<p>Completed tasks: {{ completedTodosCount$ | async }}</p>
+<hr>
+My tasks:
+<ul>
+  @for (todo of (todos$ | async); track todo) {
+    <div class="todo">
+      <li [class.done]="todo.completed">{{ todo.title }}</li>
+    </div>
+  }
+</ul>
+
+
